@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+    <div class="login">
+        <form name='form-login'>
+    
+            <h1>REGISTER</h1>
+    
+            <label for="name">Email</label>
+            <input  id="name" placeholder="Username"  value=" " required>
+    
+            <label for="pw">Password</label>
+            <input type="password"
+                   id= "pw"
+                   placeholder="Password" required>
+    
+         <label for="name">address</label>
+         <input type="address" id="add" placeholder="Username"  value=" " required>
+           
+            
+            <input id="rgstr_btn"  value="Register" onclick="store()">
+    
+        </form>
+    </div>
+    
+    <div class="login">
+        <form name='form-login'>
+    
+            <h1>SIGN IN</h1>
+    
+            <label for="userName">Email</label>
+            <input type="email" id="userName" placeholder="Username" required>
+    
+            <label for="userPw">Password</label>
+            <input type="password" id= "userPw" placeholder="Password" required>
+    
+            <div id="remember">
+                <input type="checkbox" value="lsRememberMe" id="rememberMe"
+                       style="display: inline-block;">
+                <label>Remember me</label>
+            </div>
+    
+            <input id= "login_btn" type="button" value="Login" onclick="check()">
+    
+        </form>
+    </div>
+    
+  <script>
+   function ValidateEmail(input) {
+
+var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+if (input.value.match(validRegex)) {
+
+  alert("Valid email address!");
+
+  document.form1.text1.focus();
+
+  return true;
+
+} else {
+
+  alert("Invalid email address!");
+
+  document.form1.text1.focus();
+
+  return false;
+
+}
+       
+     function store(){
+    var usrName = document.getElementById('name').value;
+    var usrPw = document.getElementById('pw').value;
+   // let regx = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  //  Boolean b = usrName.value.match(regx);
+    if(ValidateEmail(usrName) ){
+      consolelog(ValidateEmail(usrName));
+    let stored_users = JSON.parse(localStorage.getItem('Users'));
+    if(stored_users) {
+        stored_users.push({name: usrName, password: usrPw});
+        localStorage.setItem('Users', JSON.stringify(stored_users));
+    } else {
+        localStorage.setItem('Users', JSON.stringify([{name: usrName, password: usrPw}]));
+    
+}
+       }
+      
+    }
+function check() {
+    var usrName = document.getElementById('userName').value;
+    var usrPw = document.getElementById('userPw').value;
+     let flag=0;
+    let stored_users = JSON.parse(localStorage.getItem('Users'))
+     console.log(stored_users);
+    if(stored_users) {
+        // console.log(stored_users);
+        for (let u = 0; u < stored_users.length; u++){
+            // console.log(usrName == stored_users[u].name && usrPw == stored_users[u].password)
+            if (usrName == stored_users[u].name && usrPw == stored_users[u].password) {
+                alert('You are logged in ' + usrName);
+                 flag=1;
+
+             }
+            
+    
+        }
+    }
+
+     if(flag==0)
+      {
+        
+        localStorage.setItem('users', '[]');
+         alert('Access denied. Valid username and password is required.');
+      }
+   
+}
+  
+   }
+
+
+
+    </script>
+</body>
+</html>
